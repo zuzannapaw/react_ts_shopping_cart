@@ -1,4 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
+import { ShoppingCart } from "../components/ShoppingCart";
 
 type ShoppingCartProviderProps = {
   children: ReactNode;
@@ -10,10 +11,14 @@ type CartItem = {
 };
 
 type ShoppingCartContext = {
+  openCart: () => void;
+  closeCart: () => void;
   getItemQuantity: (id: number) => number;
   increaseCartQuantity: (id: number) => void;
   decreaseCartQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
+  cartQuantity: number;
+  cartItems: CartItem[];
 };
 
 const ShoppingCartContext = createContext({} as ShoppingCartContext);
@@ -26,6 +31,13 @@ export const ShoppingCartProvider = ({
   children,
 }: ShoppingCartProviderProps) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
+
+  const initialValue = 0;
+  const cartQuantity = cartItems.reduce(
+    (acc, currItem) => acc + currItem.quantity,
+    initialValue
+  );
 
   const getItemQuantity = (id: number) => {
     return cartItems.find((cartItem) => cartItem.id === id)?.quantity || 0;
@@ -65,10 +77,16 @@ export const ShoppingCartProvider = ({
 
   const removeFromCart = (id: number) => {
     setCartItems((prevItems) => {
-      if (prevItems.find((item) => item.id === id)) {
-        return prevItems.filter((item) => item.id !== id);
-      }
+      return prevItems.filter((item) => item.id !== id);
     });
+  };
+
+  const openCart = () => {
+    setIsCartOpen(true);
+  };
+
+  const closeCart = () => {
+    setIsCartOpen(false);
   };
 
   return (
@@ -78,9 +96,14 @@ export const ShoppingCartProvider = ({
         increaseCartQuantity,
         decreaseCartQuantity,
         removeFromCart,
+        openCart,
+        closeCart,
+        cartItems,
+        cartQuantity: cartQuantity,
       }}
     >
       {children}
+      <ShoppingCart isCartOpen={isCartOpen} cartItems={cartItems} />
     </ShoppingCartContext.Provider>
   );
 };
