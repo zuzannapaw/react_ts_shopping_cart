@@ -7,6 +7,17 @@ import { About } from "./pages/About";
 import { Navbar } from "./components/Navbar";
 
 function App() {
+  const first = () => {
+    let count = 0;
+    return function () {
+      count++;
+      console.log(`${count}`);
+    };
+  };
+
+  const second = first();
+  second();
+  console.log();
   return (
     <>
       <Navbar />
