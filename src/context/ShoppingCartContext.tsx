@@ -54,7 +54,7 @@ export const ShoppingCartProvider = ({
       } else {
         return prevItems.map((item) => {
           if (item.id === id) {
-            return { ...item, quantity: item.quantity++ };
+            return { ...item, quantity: item.quantity + 1 };
           } else {
             return item;
           }
@@ -70,7 +70,7 @@ export const ShoppingCartProvider = ({
       } else {
         return prevItems.map((item) => {
           if (item.id === id) {
-            return { ...item, quantity: item.quantity-- };
+            return { ...item, quantity: item.quantity - 1 };
           } else {
             return item;
           }

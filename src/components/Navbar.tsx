@@ -23,7 +23,12 @@ export const Navbar = () => {
         </Nav>
         <Button
           onClick={openCart}
-          style={{ width: "3rem", height: "3rem", position: "relative" }}
+          style={{
+            width: "3rem",
+            height: "3rem",
+            position: "relative",
+            cursor: "pointer",
+          }}
           variant="outline-primary"
           className="rounded-circle"
         >
