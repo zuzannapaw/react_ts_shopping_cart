@@ -93,19 +93,19 @@ export const ShoppingCartProvider = ({
     setIsCartOpen(false);
   };
 
+  const contextValue = {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+    openCart,
+    closeCart,
+    cartItems,
+    cartQuantity: cartQuantity,
+  };
+
   return (
-    <ShoppingCartContext.Provider
-      value={{
-        getItemQuantity,
-        increaseCartQuantity,
-        decreaseCartQuantity,
-        removeFromCart,
-        openCart,
-        closeCart,
-        cartItems,
-        cartQuantity: cartQuantity,
-      }}
-    >
+    <ShoppingCartContext.Provider value={contextValue}>
       {children}
       <ShoppingCart isCartOpen={isCartOpen} cartItems={cartItems} />
     </ShoppingCartContext.Provider>
